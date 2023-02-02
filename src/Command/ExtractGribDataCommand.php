@@ -34,7 +34,7 @@ class ExtractGribDataCommand extends Command
                     $minigrib = __DIR__. "\..\..\public\grib\gfs.pgrb";
                     $outJson = __DIR__. "\..\..\public\json\\" . $lat . "_" . $lon .".json";
                     $outTxt = __DIR__. "\..\..\public\grib\\extract.txt";
-                    shell_exec( "wgrib2 -verf -lon " . $lon ." " .$lat. " ". $minigrib ." > " . $outTxt);
+                    //shell_exec( "wgrib2 -verf -lon " . $lon ." " .$lat. " ". $minigrib ." > " . $outTxt);
 
                     $dataArray = $this->extractDataFromOutputWgrib(file_get_contents($outTxt));
                     file_put_contents($outJson, json_encode($dataArray));
@@ -56,14 +56,13 @@ class ExtractGribDataCommand extends Command
     private function extractDataFromOutputWgrib(string $data)
     {
         $explode = explode("\n", $data);
-        array_shift($explode);
         $exportData = [];
 
         foreach ($explode as $item) {
             $explodeItem = explode(':', $item);
 
             if (key_exists(2, $explodeItem)) {
-                $date = substr($explodeItem[2], 3 + -1 * strlen($explodeItem[2]), strlen($explodeItem[2]) -3);
+                $date = substr($explodeItem[2], 3 + -1 * strlen($explodeItem[2]), strlen($explodeItem[2]) - 3);
                 $paramType = $explodeItem[3];
                 $paramAltitude = $explodeItem[4];
 
@@ -77,11 +76,20 @@ class ExtractGribDataCommand extends Command
                     $exportData[$date][$paramType] = [];
                 }
                 if (!key_exists($paramAltitude, $exportData[$date][$paramType])) {
-                    $exportData[$date][$paramType][$paramAltitude] = $value;
+                    $exportData[$date][$paramType][$paramAltitude] = $this->processData($value, $paramType, $paramAltitude);
                 }
             }
         }
 
         return $exportData;
+    }
+
+    private function processData($value, $paramType, $paramAltitude)
+    {
+        if (in_array($paramType, ['TMAX', 'TMP', 'TMIN'])) {
+            return $value - 273.15;
+        }
+
+        return $value;
     }
 }

@@ -47,6 +47,8 @@ class WeatherSymbol
     const LightSnow = 49;
     const HeavySnow = 50;
 
+    const HeavyRain = 51;
+
     // Modified symbols when sun is below horizo
     const Dark_Sun = 101;
     const Dark_LightCloud = 102;
