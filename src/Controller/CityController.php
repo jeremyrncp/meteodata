@@ -35,7 +35,7 @@ class CityController extends AbstractController
         return $this->render('search_city.html.twig', [
             'form' => $searchCityType->createView(),
             'cities' => isset($searchCities) ? $searchCities : null,
-            'search' => $searchCityType->getData()->getName()
+            'search' => !is_null($searchCityType->getData()) ? $searchCityType->getData()->getName() : null
         ]);
     }
 
