@@ -122,7 +122,7 @@
             </div>
                 <div class="alert alert-warning">
                     <p>
-                        <b>{{ city.name }}</b> est située dans le départemement {{ city.nomDepartemement }}, région {{ city.region }}.
+                        <b>{{ city.name }}</b> est située dans le départemement <a href="{{ path('app_search_departement', {'name': city.nomDepartemement}) }}">{{ city.nomDepartemement }}</a>, région {{ city.region }}.
                     </p>
                     <p>La latitude de {{ city.name }} est {{ city.latitude }}, sa longitude est {{ city.longitude }}.</p>
                 </div>

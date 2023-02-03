@@ -15,6 +15,33 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class CityController extends AbstractController
 {
+    #[Route('/', name: 'app_index')]
+    public function index(CityRepository $cityRepository): Response
+    {
+        $searchCities = $cityRepository->createQueryBuilder('c')
+            ->select('DISTINCT c.nomDepartemement')
+            ->getQuery()
+            ->getResult();
+
+        return $this->render('index.html.twig', [
+            'cities' => isset($searchCities) ? $searchCities : null
+        ]);
+    }
+    #[Route('/departement/{name}', name: 'app_search_departement')]
+    public function departement(string $name, Request $request, CityRepository $cityRepository): Response
+    {
+        $searchCities = $cityRepository->createQueryBuilder('c')
+            ->andWhere('c.nomDepartemement = :name')
+            ->setParameter('name', $name)
+            ->getQuery()
+            ->getResult();
+
+        return $this->render('city_departement.html.twig', [
+            'cities' => isset($searchCities) ? $searchCities : null,
+            'departement' => $name
+        ]);
+    }
+
     #[Route('/city/search', name: 'app_search_city')]
     public function search(Request $request, CityRepository $cityRepository): Response
     {
@@ -40,7 +67,7 @@ class CityController extends AbstractController
     }
 
     #[Route('/city/{name}', name: 'app_city')]
-    public function index($name, CityRepository $cityRepository, CalculateCoords $calculateCoords, WeatherService $weatherService): Response
+    public function weatherCity($name, CityRepository $cityRepository, CalculateCoords $calculateCoords, WeatherService $weatherService): Response
     {
         $city = $cityRepository->findOneBy(['name' => $name]);
 

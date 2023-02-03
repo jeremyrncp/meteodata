@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+{% block title %}Météo Data, données météo brutes{% endblock %}
+{% block body %}
+    <div class="text-center">
+        <form name="search_city" method="post" action="/city/search">
+            <div id="search_city">
+                <div class="mb-3"
+                ><label for="search_city_name" class="form-label required"><b>Nom de la ville</b></label>
+                    <input type="text" id="search_city_name" name="search_city[name]" required="required" class="form-control" value="" />
+                </div>
+                <div class="mb-3">
+                    <button type="submit" id="search_city_Rechercher" name="search_city[Rechercher]" class="btn-primary btn">Rechercher</button>
+                </div>
+            </div>
+        </form>
+        <br />
+        <b>La météo par départemement</b>
+        <ul>
+            {% for city in cities %}
+                <li><a href="{{ path('app_search_departement', {'name': city.nomDepartemement}) }}">{{ city.nomDepartemement }}</a></li>
+            {% endfor %}
+        </ul>
+        <div class="alert alert-warning">
+            <a href="{{ path('app_data') }}">Données météo gratuites</a> par API JSON
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+{% endblock %}

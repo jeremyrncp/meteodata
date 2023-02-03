@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Données météo brutes{% endblock %}
+
+{% block body %}
+<div class="alert alert-warning">
+    <b>ENDPOINT : /weather/data</b>
+    <b>Parameters :</b>
+    <ul>
+        <li>lat : latitude en degré format WSG84</li>
+        <li>lon : longitude en degré format WSG84</li>
+    </ul>
+    Exemple : <a href="/weather/data?lat=45.1821215167&lon=5.72133051752" target="_blank">/weather/data?lat=45.1821215167&lon=5.72133051752</a>
+    <br /><br />
+    <p><b>Réponse :</b></p>
+    <p>Données au format JSON, nombreux paramètres (temps sensible, température, température maximale, température minimale, précipitations, couverture nuageuse etc...)</p>
+
+    <b>Liste des icones :</b>
+    <ul>
+        <li>1: Soleil</li>
+        <li>2: Nuageux</li>
+        <li>3: Très nuageux</li>
+        <li>4: Ciel couvert</li>
+        <li>9: Petite pluie</li>
+        <li>10: Pluie</li>
+        <li>11: Pluie orageuse</li>
+        <li>13: Neige</li>
+        <li>14: Neige orageuse</li>
+        <li>15: Brouillard</li>
+        <li>49: Petite neige</li>
+        <li>50: Forte neige</li>
+    </ul>
+</div>
+{% endblock %}
