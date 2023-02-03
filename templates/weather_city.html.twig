@@ -1,6 +1,21 @@
 {% extends 'base.html.twig' %}
 {% block title %}Météo {{ city.name }} ({{ city.nomDepartemement }}){% endblock %}
 {% block body %}
+    <div class="text-center">
+        <form name="search_city" method="post" action="/city/search">
+            <div id="search_city">
+                <div class="mb-3"
+                ><label for="search_city_name" class="form-label required"><b>Nom de la ville</b></label>
+                    <input type="text" id="search_city_name" name="search_city[name]" required="required" class="form-control" value="" />
+                </div>
+                <div class="mb-3">
+                    <button type="submit" id="search_city_Rechercher" name="search_city[Rechercher]" class="btn-primary btn">Rechercher</button>
+                </div>
+            </div>
+        </form>
+        <br />
+        <h1>Météo {{ city.name }}</h1>
+    </div>
         <div class="container py-5 h-100">
             <div class="row d-flex justify-content-center align-items-center h-100" style="color: #282828;">
                 <div class="col-md-9 col-lg-7 col-xl-5">
@@ -105,8 +120,14 @@
 
                 </div>
             </div>
+                <div class="alert alert-warning">
+                    <p>
+                        <b>{{ city.name }}</b> est située dans le départemement {{ city.nomDepartemement }}, région {{ city.region }}.
+                    </p>
+                    <p>La latitude de {{ city.name }} est {{ city.latitude }}, sa longitude est {{ city.longitude }}.</p>
+                </div>
                 <div class="alert alert-info">
-                    <p>Accès aux <a href="/weather/data?lat={{ city.latitude }}&lon={{ city.longitude }}">Données météo brutes</a></p>
+                    <p>Accès aux <a href="/weather/data?lat={{ city.latitude }}&lon={{ city.longitude }}" target="_blank">Données météo brutes</a></p>
                     <p><b>Un lien en dur menant vers http://meteodata.org/ est requis sur la page les affichant.</b></p>
                 </div>
         </div>
@@ -119,4 +140,6 @@
         $("#divWeather").val(date);
     }
 </script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8668318892998107"
+        crossorigin="anonymous"></script>
 {% endblock %}
