@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+{% block title %}Météo ({{ departement }}){% endblock %}
+{% block body %}
+    <div class="text-center">
+        <form name="search_city" method="post" action="/city/search">
+            <div id="search_city">
+                <div class="mb-3"
+                ><label for="search_city_name" class="form-label required"><b>Nom de la ville</b></label>
+                    <input type="text" id="search_city_name" name="search_city[name]" required="required" class="form-control" value="" />
+                </div>
+                <div class="mb-3">
+                    <button type="submit" id="search_city_Rechercher" name="search_city[Rechercher]" class="btn-primary btn">Rechercher</button>
+                </div>
+            </div>
+        </form>
+        <br />
+        <ul>
+            {% for city in cities %}
+                <li><a href="{{ path('app_city', {'name': city.name}) }}">{{ city.name }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}
+{% block javascripts %}
+{% endblock %}
