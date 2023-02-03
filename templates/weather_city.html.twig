@@ -1,0 +1,122 @@
+{% extends 'base.html.twig' %}
+{% block title %}Météo {{ city.name }} ({{ city.nomDepartemement }}){% endblock %}
+{% block body %}
+        <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100" style="color: #282828;">
+                <div class="col-md-9 col-lg-7 col-xl-5">
+
+                    <div class="card mb-4 gradient-custom" style="border-radius: 25px;">
+                        <div class="card-body p-4">
+
+                            <div id="demo1" class="carousel slide" data-ride="carousel">
+                                <!-- Indicators -->
+                                <ul class="carousel-indicators mb-0">
+                                    <li data-target="#demo1" data-slide-to="0" class="active"></li>
+                                    <li data-target="#demo1" data-slide-to="1"></li>
+                                    <li data-target="#demo1" data-slide-to="2"></li>
+                                </ul>
+                                <!-- Carousel inner -->
+                                <div class="carousel-inner">
+                                    <div class="carousel-item active">
+                                        <div class="d-flex justify-content-between mb-4 pb-2">
+                                            <div>
+                                                <h2 class="display-2"><strong>{{ hourWeather.data['TMP']['2 m above ground']|round }}°C</strong></h2>
+                                                <p class="text-muted mb-0">{{ city.name }} - {{ city.nomDepartemement }}</p>
+                                            </div>
+                                            <div>
+                                                <i class="far {{ weather_symbol(hourWeather.data['icon'], hourWeather.date|slice(-2,2)) }} fa-4x mb-3" style="color: #ddd;"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="card" style="border-radius: 25px;">
+                        <div class="card-body p-4">
+
+                            <div id="demo3" class="carousel slide" data-ride="carousel">
+                                <p><b>Météo par jour</b></p>
+
+                                <!-- Indicators -->
+                                <ul class="carousel-indicators mb-0">
+                                    <li data-target="#demo3" data-slide-to="0"></li>
+                                    <li data-target="#demo3" data-slide-to="1"></li>
+                                    <li data-target="#demo3" data-slide-to="2" class="active"></li>
+                                </ul>
+                                <!-- Carousel inner -->
+                                <div class="carousel-inner">
+                                    <div class="carousel-item active">
+                                        <div class="d-flex justify-content-around text-center mb-4 pb-3 pt-2">
+                                            {% for weatherDataDay in tempAndIconByDay %}
+                                                <div class="flex-column" onclick="displayDate({{ weatherDataDay.DATE }})" style="cursor: pointer;">
+                                                    <p class="small"><strong>{{ weatherDataDay.TMP|round }}°C</strong></p>
+                                                    <i class="{{  weather_symbol(weatherDataDay.ICON, 12) }} fa-2x mb-3" style="color: #ddd;"></i>
+                                                    <p class="mb-0"><strong>{{ weatherDataDay.DATE|slice(-2,2) }}</strong></p>
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <br />
+                    <div class="card mb-8" style="border-radius: 25px;">
+                        <div class="card-body p-8">
+
+                            <div id="demo2" class="carousel slide" data-ride="carousel">
+                                <!-- Indicators -->
+                                <ul class="carousel-indicators mb-0">
+                                    <li data-target="#demo2" data-slide-to="0"></li>
+                                    <li data-target="#demo2" data-slide-to="1" class="active"></li>
+                                    <li data-target="#demo2" data-slide-to="2"></li>
+                                </ul>
+
+                                {% for date, weatherByDay in weatherData %}
+                                    {% if divWeather is not defined %}
+                                        <input type="hidden" id="divWeather" value="{{ date }}"/>
+                                        <div class="carousel-inner" id="{{ date }}">
+                                         {% set divWeather = date %}
+                                    {% else %}
+                                         <div class="carousel-inner" id="{{ date }}" style="display:none;">
+                                    {% endif %}
+                                             <p>Météo du <b>{{ date|slice(-2,2) }}/{{  date|slice(-4,2)  }}</b></p>
+                                       <!-- Carousel inner -->
+                                        <div class="carousel-item active">
+                                            <div class="d-flex justify-content-around text-center mb-4 pb-3 pt-2">
+                                                {% for hour, weatherByHour in weatherByDay %}
+                                                <div class="flex-column">
+                                                    <p class="small"><strong>{{ weatherByHour['TMP']['2 m above ground']|round }}°C</strong></p>
+                                                    <i class="{{ weather_symbol(weatherByHour['icon'], hour) }} fa-2x mb-3" style="color: #ddd;"></i>
+                                                    <p class="mb-0"><strong>{{ hour }}</strong><span class="mb-0 text-muted" style="font-size: .75rem;"> h</span></p>
+                                                </div>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+                <div class="alert alert-info">
+                    <p>Accès aux <a href="/weather/data?lat={{ city.latitude }}&lon={{ city.longitude }}">Données météo brutes</a></p>
+                    <p><b>Un lien en dur menant vers http://meteodata.org/ est requis sur la page les affichant.</b></p>
+                </div>
+        </div>
+{% endblock %}
+{% block javascripts %}
+<script type="application/javascript">
+    function displayDate(date) {
+        $("#"+ $("#divWeather").val()).hide();
+        $("#"+ date).show();
+        $("#divWeather").val(date);
+    }
+</script>
+{% endblock %}

@@ -71,4 +71,97 @@ class WeatherSymbol
     const Dark_HeavySleetSun = 143;
     const Dark_LightSnowSun = 144;
     const Dark_HeavySnowSun = 145;
+
+    public function getIcon($icon, $hour)
+    {
+        /** day icon */
+        if ($hour >= 7 and $hour <= 17)
+        {
+            switch($icon) {
+                case self::Sun:
+                    return "far fa-sun";
+                    break;
+                case self::Cloud:
+                    return "fas fa-cloud";
+                    break;
+                case self::LightCloud:
+                    return "fas fa-cloud-sun";
+                    break;
+                case self::PartlyCloud:
+                    return "fas fa-cloud-sun";
+                    break;
+                case self::Fog:
+                    return "fas fa-smog";
+                    break;
+                case self::Snow:
+                    return "fas fa-snowflake";
+                    break;
+                case self::LightSnow:
+                    return "fas fa-cloud-meatball";
+                    break;
+                case self::HeavySnow:
+                    return "fas fa-snowflake";
+                    break;
+                case self::LightRain:
+                    return "fas fa-cloud-sun-rain";
+                    break;
+                case self::Rain:
+                    return "fas fa-cloud-showers-heavy";
+                    break;
+                case self::HeavyRain:
+                    return "fas fa-cloud-showers-heavy";
+                    break;
+                case self::RainThunder:
+                    return "fas fa-poo-storm";
+                    break;
+                case self::SnowThunder:
+                    return "fas fa-poo-storm";
+                    break;
+            }
+        }
+        /** night icon */
+        else {
+            switch($icon) {
+                case self::Sun:
+                    return "far fa-moon";
+                    break;
+                case self::Cloud:
+                    return "fas fa-cloud";
+                    break;
+                case self::LightCloud:
+                    return "fas fa-cloud-moon";
+                    break;
+                case self::PartlyCloud:
+                    return "fas fa-cloud-moon";
+                    break;
+                case self::Fog:
+                    return "fas fa-smog";
+                    break;
+                case self::Snow:
+                    return "fas fa-snowflake";
+                    break;
+                case self::LightSnow:
+                    return "fas fa-cloud-meatball";
+                    break;
+                case self::HeavySnow:
+                    return "fas fa-snowflake";
+                    break;
+                case self::LightRain:
+                    return "fas fa-cloud-moon-rai";
+                    break;
+                case self::Rain:
+                    return "fas fa-cloud-showers-heavy";
+                    break;
+                case self::HeavyRain:
+                    return "fas fa-cloud-showers-heavy";
+                    break;
+                case self::RainThunder:
+                    return "fas fa-poo-storm";
+                    break;
+                case self::SnowThunder:
+                    return "fas fa-poo-storm";
+                    break;
+            }
+        }
+    }
 }
