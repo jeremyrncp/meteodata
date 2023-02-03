@@ -45,7 +45,7 @@ class CalculateWeatherSymbol
             return WeatherSymbol::HeavyRain;
         } else if ($precipitations >= 3) {
             return WeatherSymbol::Rain;
-        } elseif ($precipitations !== 0) {
+        } elseif ($precipitations > 0) {
             return WeatherSymbol::LightRain;
         }
 
