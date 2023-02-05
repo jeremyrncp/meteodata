@@ -147,7 +147,7 @@ class WeatherSymbol
                     return "fas fa-snowflake";
                     break;
                 case self::LightRain:
-                    return "fas fa-cloud-moon-rai";
+                    return "fas fa-cloud-moon-rain";
                     break;
                 case self::Rain:
                     return "fas fa-cloud-showers-heavy";

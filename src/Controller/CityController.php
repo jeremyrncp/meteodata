@@ -23,8 +23,18 @@ class CityController extends AbstractController
             ->getQuery()
             ->getResult();
 
+        $cities = [];
+
+        /** @var City $city */
+        foreach ($searchCities as $key => $city) {
+             if ($city['nomDepartemement'] != '' && $city['nomDepartemement'] != 'nom_departement')  {
+                $cities[] = $city;
+            }
+        }
+
         return $this->render('index.html.twig', [
-            'cities' => isset($searchCities) ? $searchCities : null
+            'cities' => $cities,
+            'form' => ($this->createForm(SearchCityType::class))->createView()
         ]);
     }
     #[Route('/departement/{name}', name: 'app_search_departement')]
@@ -38,7 +48,8 @@ class CityController extends AbstractController
 
         return $this->render('city_departement.html.twig', [
             'cities' => isset($searchCities) ? $searchCities : null,
-            'departement' => $name
+            'departement' => $name,
+            'form' => ($this->createForm(SearchCityType::class))->createView()
         ]);
     }
 
@@ -49,7 +60,7 @@ class CityController extends AbstractController
 
         $searchCityType->handleRequest($request);
 
-        if ($searchCityType->isSubmitted() && $searchCityType->isValid()) {
+        if ($searchCityType->isSubmitted()) {
             /** @var City $city */
             $city = $searchCityType->getData();
 
@@ -62,7 +73,7 @@ class CityController extends AbstractController
         return $this->render('search_city.html.twig', [
             'form' => $searchCityType->createView(),
             'cities' => isset($searchCities) ? $searchCities : null,
-            'search' => !is_null($searchCityType->getData()) ? $searchCityType->getData()->getName() : null
+            'search' => !is_null($searchCityType->getData()) ? $searchCityType->getData()->getName() : null,
         ]);
     }
 
@@ -80,7 +91,8 @@ class CityController extends AbstractController
             'city' => $city,
             'weatherData' => $jsonData,
             'tempAndIconByDay' => $this->mergeWeatherArray($weatherService->getIconByDay($jsonData), $weatherService->getTmpMoyByDay($jsonData)),
-            'hourWeather' => $this->getHourWeather($dataWIthIcon)
+            'hourWeather' => $this->getHourWeather($dataWIthIcon),
+            'form' => ($this->createForm(SearchCityType::class))->createView()
         ]);
     }
 
