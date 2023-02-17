@@ -13,7 +13,7 @@ class Run
     {
         if ($hour <= 8) {
             return self::ZERO;
-        } else if ($hour <= 12) {
+        } else if ($hour <= 14) {
             return self::SIX;
         } else if ($hour <= 18) {
             return self::DOUZE;

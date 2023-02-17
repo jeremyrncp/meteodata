@@ -48,6 +48,18 @@
 
                         </div>
                     </div>
+                    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8668318892998107"
+                            crossorigin="anonymous"></script>
+                    <!-- annonce horizontal -->
+                    <ins class="adsbygoogle"
+                         style="display:block"
+                         data-ad-client="ca-pub-8668318892998107"
+                         data-ad-slot="8756717568"
+                         data-ad-format="auto"
+                         data-full-width-responsive="true"></ins>
+                    <script>
+                        (adsbygoogle = window.adsbygoogle || []).push({});
+                    </script>
                     <div class="card" style="border-radius: 25px;">
                         <div class="card-body p-4">
 
@@ -66,9 +78,9 @@
                                         <div class="d-flex justify-content-around text-center mb-4 pb-3 pt-2">
                                             {% for weatherDataDay in tempAndIconByDay %}
                                                 <div class="flex-column" onclick="displayDate({{ weatherDataDay.DATE }})" style="cursor: pointer;">
-                                                    <p class="small"><strong>{{ weatherDataDay.TMP|round }}°C</strong></p>
-                                                    <i class="{{  weather_symbol(weatherDataDay.ICON, 12) }} fa-2x mb-3" style="color: #ddd;"></i>
                                                     <p class="mb-0"><strong>{{ weatherDataDay.DATE|slice(-2,2) }}</strong></p>
+                                                    <i class="{{  weather_symbol(weatherDataDay.ICON, 12) }} fa-2x mb-3" style="color: #ddd;"></i>
+                                                    <p class="small"><strong>{{ weatherDataDay.TMP|round }}°C</strong></p>
                                                 </div>
                                             {% endfor %}
                                         </div>
@@ -127,7 +139,7 @@
                     <p>La latitude de {{ city.name }} est {{ city.latitude }}, sa longitude est {{ city.longitude }}.</p>
                 </div>
                 <div class="alert alert-info">
-                    <p>Accès aux <a href="/weather/data?lat={{ city.latitude }}&lon={{ city.longitude }}" target="_blank">Données météo brutes</a></p>
+                    <p>Accès aux <a href="/weather/data?lat={{ city.latitude }}&lon={{ city.longitude }}" target="_blank">Données météo brutes</a> - <a href="{{ path('app_data') }}">Documentation</a></p>
                     <p><b>Un lien en dur menant vers http://meteodata.org/ est requis sur la page les affichant.</b></p>
                 </div>
         </div>
@@ -140,6 +152,4 @@
         $("#divWeather").val(date);
     }
 </script>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8668318892998107"
-        crossorigin="anonymous"></script>
 {% endblock %}

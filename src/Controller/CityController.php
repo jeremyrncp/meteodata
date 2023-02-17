@@ -113,13 +113,17 @@ class CityController extends AbstractController
 
     private function getHourWeather(array $data)
     {
+        $weather = [];
+
         foreach ($data as $date => $weatherData) {
-            if(date('YmdH') == $date) {
-                return [
-                    'date' => $date,
-                    'data' => $weatherData
-                ];
-            }
+            $weather[mktime(substr($date, -2, 2), 00, 00, substr($date, 4,2), substr($date, -4, 2), substr($date, 0,4))-time()] = $weatherData;
         }
+
+        ksort($weather);
+
+        return [
+            'date' => "",
+            'data' => reset($weather)
+        ];
     }
 }

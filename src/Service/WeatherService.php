@@ -2,6 +2,8 @@
 
 namespace App\Service;
 
+use App\Enum\WeatherSymbol;
+
 class WeatherService
 {
     /**
@@ -32,6 +34,7 @@ class WeatherService
                 $weatherData['HCDC']['high cloud layer'],
                 $weatherData['TCDC']['entire atmosphere']
             );
+           $data[$date]['temps_sensible'] = WeatherSymbol::getIconName($data[$date]['icon']);
         }
 
         return $data;

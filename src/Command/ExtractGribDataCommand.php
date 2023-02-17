@@ -28,7 +28,7 @@ class ExtractGribDataCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        for ($lon=-10;$lon<=10;$lon=$lon+0.25) {
+        for ($lon=-5;$lon<=10;$lon=$lon+0.25) {
             for ($lat=42;$lat<=52;$lat=$lat+0.25) {
                 if ($_ENV['APP_OS'] === 'windows') {
                     $minigrib = __DIR__. "\..\..\public\grib\gfs.pgrb";

@@ -72,6 +72,51 @@ class WeatherSymbol
     const Dark_LightSnowSun = 144;
     const Dark_HeavySnowSun = 145;
 
+    static public function getIconName($icon)
+    {
+        switch($icon) {
+            case self::Sun:
+                return "Ciel dégagé";
+                break;
+            case self::Cloud:
+                return "Ciel couvert";
+                break;
+            case self::LightCloud:
+                return "Ciel nuageux";
+                break;
+            case self::PartlyCloud:
+                return "Peu nuageux";
+                break;
+            case self::Fog:
+                return "Brouillard";
+                break;
+            case self::Snow:
+                return "Neige";
+                break;
+            case self::LightSnow:
+                return "Neige faible";
+                break;
+            case self::HeavySnow:
+                return "Neige forte";
+                break;
+            case self::LightRain:
+                return "Pluie faible";
+                break;
+            case self::Rain:
+                return "Pluie";
+                break;
+            case self::HeavyRain:
+                return "Pluie forte";
+                break;
+            case self::RainThunder:
+                return "Orage";
+                break;
+            case self::SnowThunder:
+                return "Orage de neige";
+                break;
+        }
+    }
+
     public function getIcon($icon, $hour)
     {
         /** day icon */

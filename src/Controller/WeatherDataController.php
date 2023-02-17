@@ -22,6 +22,22 @@ class WeatherDataController extends AbstractController
         $jsonData = json_decode(file_get_contents($dataPath), true);
 
 
-        return JsonResponse::fromJsonString(json_encode($weatherService->addPictogrammeToWeatherData($jsonData)));
+        return JsonResponse::fromJsonString(json_encode($this->transformData($weatherService->addPictogrammeToWeatherData($jsonData))));
+    }
+
+    private function transformData(array $data): array
+    {
+        $dataReturn = [];
+
+        foreach($data as $date => $parametersData) {
+            $tableParameter = [];
+            $tableParameter['date'] = $date;
+            foreach($parametersData as $parameter => $dataByParameter) {
+                $tableParameter[$parameter] = is_array($dataByParameter) ? reset($dataByParameter) : $dataByParameter;
+            }
+            $dataReturn[] = $tableParameter;
+        }
+
+        return $dataReturn;
     }
 }
